@@ -8,36 +8,45 @@
 // Пояснення:
 // Перевіряємо кожен елемент масиву і порівнюємо його з попереднім. Якщо знайдемо спаду, повертаємо false, інакше true.
 
-const isIncreasing = (arr) => {
-  for (let i = 0; i < arr.length - 1; i++) {
-    if (arr[i] >= arr[i + 1]) {
-      return false;
-    }
-  }
-  return true;
-};
+// const isIncreasing = (arr) => {
+//   for (let i = 0; i < arr.length - 1; i++) {
+//     if (arr[i] >= arr[i + 1]) {
+//       return false;
+//     }
+//   }
+//   return true;
+// };
 
-// console.log(isIncreasing([1, 2, 3, 4]));
-// console.log(isIncreasing([1, 2, 3, 2]));
-// console.log(isIncreasing([1, 2, 2, 4, 5, 6, 7, 8, 9, 10]));
+const isIncreasing = (arr) => {
+  return arr.every((el, i) => i === 0 || el > arr[i - 1]);
+}
+
+console.log(isIncreasing([1, 2, 3, 4]));
+console.log(isIncreasing([1, 2, 3, 2]));
+console.log(isIncreasing([1, 2, 2, 4, 5, 6, 7, 8, 9, 10]));
 
 // Задача: Підрахунок кількості входжень елемента в масив
 // Умова: Напишіть функцію, яка приймає масив і елемент, а потім повертає кількість входжень цього елемента в масив.
 
 // console.log(countOccurrences([1, 2, 2, 3, 4, 2], 2)); // 3
 
+// const countOccurrences = (arr, el) => {
+//   let count = 0;
+
+//   for (let i = 0; i < arr.length; i++) {
+//     if (arr[i] === el) {
+//       count++;
+//     }
+//   }
+//   return count;
+// };
+
 const countOccurrences = (arr, el) => {
-  let count = 0;
+  return arr.reduce((acc, item) => item === el ? acc + 1 : acc, 0);
+}
 
-  for (let i = 0; i < arr.length; i++) {
-    if (arr[i] === el) {
-      count++;
-    }
-  }
-  return count;
-};
 
-// console.log(countOccurrences([1, 2, 2, 3, 4, 2], 2));
+console.log(countOccurrences([1, 2, 2, 3, 4, 2], 2));
 
 // Задача: Перевірка на анаграми
 // Умова: Напишіть функцію, яка перевіряє, чи є два рядки анаграмами (мають однакові букви, але в різному порядку).
@@ -46,20 +55,37 @@ const countOccurrences = (arr, el) => {
 // console.log(areAnagrams("listen", "silent")); // true
 // console.log(areAnagrams("hello", "world")); // false
 
+// const areAnagrams = (str1, str2) => {
+//   if (str1.length !== str2.length) return false;
+
+//   let normalArr1 = str1.toLowerCase().split("").sort();
+//   let normalArr2 = str2.toLowerCase().split("").sort();
+
+//   for (let i = 0; i < normalArr1.length; i++) {
+//     if (normalArr1[i] != normalArr2[i]) return false;
+//   }
+//   return true;
+// };
+
 const areAnagrams = (str1, str2) => {
   if (str1.length !== str2.length) return false;
-
-  let normalArr1 = str1.toLowerCase().split("").sort();
-  let normalArr2 = str2.toLowerCase().split("").sort();
-
-  for (let i = 0; i < normalArr1.length; i++) {
-    if (normalArr1[i] != normalArr2[i]) return false;
+  
+  const charMap = new Map();
+  
+   for (const char of str1.toLowerCase()) {
+    charMap.set(char, (charMap.get(char) || 0) + 1);
+  }
+  
+  for (const char of str2.toLowerCase()) {
+    const count = charMap.get(char);
+    if (!count) return false;
+    charMap.set(char, count - 1);
   }
   return true;
 };
 
-// console.log(areAnagrams("hello", "world"));
-// console.log(areAnagrams("listen", "silent"));
+console.log(areAnagrams("hello", "world"));
+console.log(areAnagrams("listen", "silent"));
 
 // Створити рядок з перших літер слів
 // Умова:
@@ -208,4 +234,4 @@ const findPair = (arr, num) => {
     return result;
 };
 
-console.log(findPair([1, 2, 3, 4, 5], 8));
+// console.log(findPair([1, 2, 3, 4, 5], 8));
