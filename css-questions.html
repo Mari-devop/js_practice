@@ -1,11 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Questions</title>
-</head>
-<body>
-    
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>HTML Questions</title>
+        <link rel="stylesheet" href="./styles/common.css">
+    </head>
+    <body>
+        <header>
+            <div class="container_header">
+                <div class="container_header_item">
+                    <a href="./index.html" class="card_link">Home</a>
+                </div>
+            </div>
+        </header>
+        <div class="container" id="container">
+            <div class="container_header">
+                <h1>CSS Questions</h1>
+            </div>
+            <div class="container_body" id="container_body"></div>
+        </div>
+        <dialog id="questionModal">
+            <div class="modal">
+                <header>
+                    <h2 id="modalTitle">Question</h2>
+                    <button class="btn" id="closeBtn"
+                        aria-label="Close">✕</button>
+                </header>
+                <div class="content" id="modalContent"></div>
+            </div>
+            <div class="actions">
+                <form method="dialog">
+                    <button class="btn primary">OK</button>
+                </form>
+            </div>
+        </dialog>
+
+        <script type="module">
+            import htmlQuestions from './utils/css-questions.js';
+
+            const containerBody = document.getElementById('container_body');
+            const modal = document.getElementById('questionModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            const closeBtn = document.getElementById('closeBtn');
+
+            htmlQuestions.forEach(({ id }) => {
+                const card = document.createElement('button');
+                card.type = 'button';
+                card.className = 'card';
+                card.dataset.id = String(id);
+                card.textContent = String(id);
+                containerBody.appendChild(card);
+            });
+
+            containerBody.addEventListener('click', (e) => {
+                const card = e.target.closest('.card');
+                if (!card) return;
+
+                const id = Number(card.dataset.id);
+                const item = htmlQuestions.find(q => q.id === id);
+                if (!item) return;
+
+                modalTitle.textContent = `#${item.id}`;
+                modalContent.innerHTML = `
+                    <p><strong>Питання:</strong> ${item.question}</p>
+                    <p><strong>Відповідь:</strong> ${item.answer}</p>
+                `;
+                modal.showModal();
+            });
+
+            closeBtn.addEventListener('click', () => modal.close());
+
+            modal.addEventListener('click', (e) => {
+                const rect = modal.getBoundingClientRect();
+                const inDialog = e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom;
+                if (!inDialog) modal.close();
+            });
+  </script>
+    </body>
 </html>
