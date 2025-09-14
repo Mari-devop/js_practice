@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Task manager</title>
+        <link rel="stylesheet" href="../styles/common.css">
+    </head>
+    <style>
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .input-container input {
+            height: 40px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+            
+            &:focus {
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            }
+        }
+
+        .input-container select {
+            height: 40px;
+            width: 30%;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+
+        .input-container select option {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .input-container label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        #tasksList {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-wrap: wrap;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+            
+            li {
+                list-style: none;
+                font-size: 16px;
+                font-weight: 600;
+                color: #333;
+            }
+        }
+
+        .task-item {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .task-item p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .task-item button {
+            width: 30%;
+            height: 40px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            height: 40px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+
+            &:hover {
+                background-color: #3b82f6;
+                color: #fff;
+            }
+
+            &:active {
+                background-color: #7090c0;
+                color: #fff;
+            }
+        }
+    </style>
+    <body>
+        <header>
+            <div class="container_header">
+                <div class="container_header_item">
+                    <a href="./index.html" class="card_link">Home</a>
+                </div>
+            </div>
+        </header>
+        <div id="container" class="container">
+            <h1>Create Task</h1>
+            <div class="input-container">
+                <label for="taskInput">Task</label>
+                <input type="text" id="taskInput" placeholder="Task">
+                <label for="statusInput">Status</label>
+                <select id="statusInput">
+                    <option value="new" selected>new</option>
+                    <option value="in-progress">in-progress</option>
+                    <option value="done">done</option>
+                </select>
+                <label for="priorityInput">Priority</label>
+                <select id="priorityInput">
+                    <option value="high">high</option>
+                    <option value="medium" selected>medium</option>
+                    <option value="low">low</option>
+                </select>
+            </div>
+            <div class="btn-container">
+                <button id="addTaskBtn" class="btn">Add task</button>
+            </div>
+            <div id="tasksList">
+                <h2>Tasks</h2>
+            </div>
+            <div class="btn-container">
+                <button id="sortTasksBtn" class="btn">Sort tasks</button>
+                <button id="filterTasksBtn" class="btn">Filter tasks by status and priority</button>
+                <button id="saveTasksBtn" class="btn">Save tasks</button>
+                <button id="loadTasksBtn" class="btn">Load tasks</button>
+            </div>
+        </div>
+        <script type="module" src="./index.js"></script>
+    </body>
+</html>
