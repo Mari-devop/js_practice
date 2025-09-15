@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/common.css">
+        <title>Budget Calculator</title>
+    </head>
+    <style>
+       #addEntryForm {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+        width: 30%;
+       }
+       
+       #addEntryForm input {
+        height: 20px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+       }
+
+       #addEntryForm select {
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+       }
+
+       #addEntryForm label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+       }
+
+       #addEntryBtn{
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 30%;
+        cursor: pointer;
+        &:hover {
+            background-color: #3b82f6;
+            color: #fff;
+        }
+        
+        &:active {
+            background-color: #7090c0;
+            color: #fff;
+        }
+       }
+
+       .entry-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+       }
+
+       .entry-item p {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+       }
+
+       .btn-primary {
+        width: 30%;
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+       }
+    </style>
+    <body>
+        <header>
+            <div class="container_header">
+                <div class="container_header_item">
+                    <a href="../index.html" class="card_link">Home</a>
+                </div>
+            </div>
+        </header>
+        <div id="container" class="container">
+            <h1>Budget Calculator</h1>
+            <h2>Add Entry</h2>
+            <div id="addEntryForm">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" placeholder="Amount">
+                <label for="category">Category</label>
+                <select id="category">
+                    <option>Food</option>
+                    <option>Transport</option>
+                    <option>Housing</option>
+                    <option>Utilities</option>
+                    <option>Entertainment</option>
+                    <option>Other</option>
+                </select>
+                <label for="date">Date</label>
+                <input type="date" id="date" placeholder="Date">
+                <label for="type">Type</label>
+                <select id="type">
+                    <option value="income">Income</option>
+                    <option value="expense">Expense</option>
+                </select>
+            </div>
+            <button id="addEntryBtn">Add Entry</button>
+            <h2>Entries List</h2>
+            <div id="entriesList"></div>
+            <button id="saveEntriesBtn" class="btn-primary">Save
+                Entries</button>
+            <button id="getBalanceBtn" class="btn-primary">Get Balance</button>
+            <button id="getBalanceByCategoryBtn" class="btn-primary">Get Balance
+                by Category</button>
+            <button id="getBalanceByDateBtn" class="btn-primary">Get Balance by
+                Date</button>
+            <button id="getBalanceByTypeBtn" class="btn-primary">Get Balance by
+                Type</button>
+            <h2>Balance</h2>
+            <div id="balance"></div>
+            <div id="balanceByCategoryList"></div>
+            <div id="balanceByDateList"></div>
+            <div id="balanceByTypeList"></div>
+        </div>
+        <script type="module" src="./index.js"></script>
+    </body>
+</html>
