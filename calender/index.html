@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calender</title>
+        <link rel="stylesheet" href="../styles/common.css">
+    </head>
+    <style>
+        .calender_header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .calender_header_item_button {
+            width: 100px;
+            height: 40px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+
+        }
+
+        .calender_header_item_button:hover {
+            background-color: #3b82f6;
+            color: #fff;
+        }
+        
+        .calender_header_item_button:active {
+            background-color: #7090c0;
+            color: #fff;
+        }
+        
+        .calender_body {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .calender_body_item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .calender_body_item p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .calender_body_day {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        .calender_subheader {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #dbdbdb;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
+            margin-top: 20px;
+        }
+
+        .calender_subheader_item {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .calender_body_day_out {
+            background-color: #f0f0f0c9;
+            border-radius: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+        }
+
+        #modalForm {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+            width: auto;
+            height: auto;
+        }
+
+        #modalForm input {
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            position: relative;
+        }
+
+        #closeBtn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #closeBtn:hover {
+            background-color: #3b82f6;
+            color: #fff;
+        }
+
+        #modalForm label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .events {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .events p {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        #addEventBtn {
+            height: 40px;
+            background-color: #f0f0f0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        #addEventBtn:hover {
+            background-color: #3b82f6;
+            color: #fff;
+        }
+
+        .event_item {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .event_item p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        
+    </style>
+    <body>
+        <header>
+            <div class="container_header">
+                <div class="container_header_item">
+                    <a href="../index.html" class="card_link">Home</a>
+                </div>
+            </div>
+        </header>
+        <div class="container_calender">
+            <h1>Calender</h1>
+            <div class="calender_header" id="calender_header">
+                <button class="calender_header_item_button"
+                    id="previousMonthBtn" aria-label="Previous Month">Previous Month</button>
+                <p id="monthYear">Month Year</p>
+                <button class="calender_header_item_button"
+                    id="nextMonthBtn" aria-label="Next Month">Next Month</button>
+            </div>
+            <div class="calender_subheader" id="calender_subheader">
+                <p id="sunday" class="calender_subheader_item">Sunday</p>
+                <p id="monday" class="calender_subheader_item">Monday</p>
+                <p id="tuesday" class="calender_subheader_item">Tuesday</p>
+                <p id="wednesday" class="calender_subheader_item">Wednesday</p>
+                <p id="thursday" class="calender_subheader_item">Thursday</p>
+                <p id="friday" class="calender_subheader_item">Friday</p>
+                <p id="saturday" class="calender_subheader_item">Saturday</p>
+            </div>
+            <div class="calender_body" id="calender_body">
+            </div>
+        </div>
+        <dialog id="modal" aria-label="Modal">
+            <button id="closeBtn" aria-label="Close">Close</button>
+            <form id="modalForm">
+                <label for="eventInput">Event</label>
+                <input type="text" id="eventInput" placeholder="Event">
+                <label for="dateInput">Date</label>
+                <input type="date" id="dateInput" placeholder="Date">
+                <button type="submit" aria-label="Add event" id="addEventBtn">Add event</button>
+            </form>
+            <div id="events" class="events">
+                <p id="eventsTitle">Event List</p>
+            </div>
+        </dialog>
+        <script src="./index.js"></script>
+    </body>
+</html>
