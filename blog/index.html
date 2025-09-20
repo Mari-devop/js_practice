@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Blog</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="../styles/common.css">
+        <style>
+            .container h1 {
+                font-size: 48px !important;
+                font-weight: 800 !important;
+                text-align: center !important;
+                margin-bottom: 60px !important;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                -webkit-background-clip: text !important;
+                -webkit-text-fill-color: transparent !important;
+                background-clip: text !important;
+                position: relative !important;
+                animation: blogTitleSlideIn 1s ease-out !important;
+            }
+
+            .container h1::after {
+                content: '' !important;
+                position: absolute !important;
+                bottom: -10px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: 80px !important;
+                height: 4px !important;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                border-radius: 2px !important;
+                animation: underlineExpand 1.2s ease-out 0.5s both !important;
+            }
+
+            @keyframes blogTitleSlideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(-30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes underlineExpand {
+                from { width: 0; }
+                to { width: 80px; }
+            }
+
+            .container_body {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 32px !important;
+                animation: blogContentSlideIn 1s ease-out 0.3s both !important;
+            }
+
+            @keyframes blogContentSlideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes blogPostFloatIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(40px) scale(0.95);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+
+            .container_body p {
+                font-size: 16px !important;
+                line-height: 1.7 !important;
+                color: #444 !important;
+                margin: 0 0 24px 0 !important;
+                padding: 24px 32px !important;
+                background: rgba(255, 255, 255, 0.9) !important;
+                backdrop-filter: blur(20px) !important;
+                border-radius: 20px !important;
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.1),
+                    0 4px 16px rgba(0, 0, 0, 0.05),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+                border: 1px solid rgba(255, 255, 255, 0.3) !important;
+                position: relative !important;
+                overflow: hidden !important;
+                animation: blogPostFloatIn 0.8s ease-out both !important;
+                text-align: justify !important;
+            }
+
+            .container_body p:nth-child(2) { animation-delay: 0.15s; }
+            .container_body p:nth-child(4) { animation-delay: 0.25s; }
+
+            .container_body p::before {
+                content: '' !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: -100% !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent) !important;
+                transition: left 0.6s ease !important;
+            }
+
+            .container_body p:hover::before {
+                left: 100% !important;
+            }
+
+            .container_body p:hover {
+                transform: translateY(-4px) scale(1.01) !important;
+                box-shadow: 
+                    0 16px 40px rgba(102, 126, 234, 0.1),
+                    0 8px 20px rgba(0, 0, 0, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+            }
+
+            #commentForm .comment-item {
+                margin-top: 40px !important;
+                padding: 32px !important;
+                background: rgba(255, 255, 255, 0.95) !important;
+                backdrop-filter: blur(20px) !important;
+                border-radius: 20px !important;
+                box-shadow: 
+                    0 8px 32px rgba(0, 0, 0, 0.1),
+                    0 4px 16px rgba(0, 0, 0, 0.05),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+                border: 1px solid rgba(255, 255, 255, 0.3) !important;
+                animation: commentsSlideIn 1s ease-out 0.6s both !important;
+                position: relative !important;
+                overflow: hidden !important;
+            }
+
+            #commentForm::after {
+                content: '' !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: -100% !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent) !important;
+                transition: left 0.6s ease !important;
+            }
+
+            #commentForm:hover::after {
+                left: 100% !important;
+            }
+
+            #commentForm h2 {
+                font-size: 24px !important;
+                font-weight: 700 !important;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                -webkit-background-clip: text !important;
+                -webkit-text-fill-color: transparent !important;
+                background-clip: text !important;
+                margin: 0 0 24px 0 !important;
+                text-align: center !important;
+                position: relative !important;
+            }
+
+            #commentForm h2::after {
+                content: '' !important;
+                position: absolute !important;
+                bottom: -8px !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: 60px !important;
+                height: 3px !important;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                border-radius: 2px !important;
+            }
+
+            #commentForm label {
+                display: block !important;
+                font-size: 14px !important;
+                font-weight: 600 !important;
+                color: #667eea !important;
+                margin-bottom: 8px !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.5px !important;
+            }
+
+            #commentForm input {
+                width: 100% !important;
+                height: 48px !important;
+                padding: 0 16px !important;
+                border-radius: 16px !important;
+                border: 1px solid rgba(102, 126, 234, 0.2) !important;
+                background: rgba(255, 255, 255, 0.8) !important;
+                font-size: 15px !important;
+                color: #333 !important;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                backdrop-filter: blur(10px) !important;
+                box-sizing: border-box !important;
+                margin-bottom: 20px !important;
+            }
+
+            #commentForm input:focus {
+                outline: none !important;
+                border-color: #667eea !important;
+                background: rgba(255, 255, 255, 0.95) !important;
+                box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+                transform: translateY(-1px) !important;
+            }
+
+            #commentForm input::placeholder {
+                color: #999 !important;
+                font-weight: 400 !important;
+            }
+
+            #commentForm .btn {
+                width: 100% !important;
+                height: 48px !important;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                border-radius: 16px !important;
+                border: none !important;
+                padding: 0 24px !important;
+                cursor: pointer !important;
+                font-weight: 600 !important;
+                font-size: 16px !important;
+                color: #fff !important;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                position: relative !important;
+                overflow: hidden !important;
+                box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3) !important;
+            }
+
+            #commentForm .btn::before {
+                content: '' !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: -100% !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent) !important;
+                transition: left 0.5s ease !important;
+            }
+
+            #commentForm .btn:hover::before {
+                left: 100% !important;
+            }
+
+            #commentForm .btn:hover {
+                transform: translateY(-2px) scale(1.02) !important;
+                box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4) !important;
+            }
+
+            #commentForm .btn:active {
+                transform: translateY(0) scale(0.98) !important;
+            }
+
+            .comment-item {
+                background: rgba(255, 255, 255, 0.9) !important;
+                backdrop-filter: blur(10px) !important;
+                border-radius: 16px !important;
+                padding: 24px !important;
+                margin-bottom: 16px !important;
+                box-shadow: 
+                    0 4px 12px rgba(0, 0, 0, 0.05),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+                border: 1px solid rgba(255, 255, 255, 0.3) !important;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                position: relative !important;
+                overflow: hidden !important;
+                animation: commentSlideIn 0.5s ease-out !important;
+            }
+
+            @keyframes commentSlideIn {
+                from {
+                    opacity: 0;
+                    transform: translateX(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            .comment-item::before {
+                content: '' !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: -100% !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent) !important;
+                transition: left 0.6s ease !important;
+            }
+
+            .comment-item:hover::before {
+                left: 100% !important;
+            }
+
+            .comment-item:hover {
+                transform: translateY(-2px) scale(1.01) !important;
+                box-shadow: 
+                    0 8px 20px rgba(102, 126, 234, 0.1),
+                    0 4px 12px rgba(0, 0, 0, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+            }
+
+            .comment-item p:first-child {
+                font-weight: 600 !important;
+                color: #667eea !important;
+                font-size: 16px !important;
+                margin: 0 0 12px 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                gap: 8px !important;
+            }
+
+            .comment-item p:first-child::before {
+                content: '👤' !important;
+                font-size: 14px !important;
+            }
+
+            .comment-item p:nth-child(2) {
+                color: #444 !important;
+                line-height: 1.6 !important;
+                margin: 0 0 16px 0 !important;
+                font-size: 15px !important;
+                padding: 12px 16px !important;
+                background: rgba(102, 126, 234, 0.05) !important;
+                border-radius: 12px !important;
+                border-left: 3px solid #667eea !important;
+            }
+
+            .comment-item .btn {
+                width: auto !important;
+                height: 36px !important;
+                padding: 0 16px !important;
+                font-size: 12px !important;
+                font-weight: 600 !important;
+                border-radius: 8px !important;
+                margin-right: 8px !important;
+                transition: all 0.3s ease !important;
+                position: relative !important;
+                overflow: hidden !important;
+            }
+
+            .comment-item .btn-delete {
+                background: rgba(239, 68, 68, 0.1) !important;
+                color: #ef4444 !important;
+                border: 1px solid rgba(239, 68, 68, 0.2) !important;
+                box-shadow: none !important;
+            }
+
+            .comment-item .btn-delete:hover {
+                background: rgba(239, 68, 68, 0.2) !important;
+                transform: translateY(-1px) !important;
+                box-shadow: 0 4px 8px rgba(239, 68, 68, 0.2) !important;
+            }
+
+            .comment-item .btn-respond {
+                background: rgba(102, 126, 234, 0.1) !important;
+                color: #667eea !important;
+                border: 1px solid rgba(102, 126, 234, 0.2) !important;
+                box-shadow: none !important;
+            }
+
+            .comment-item .btn-respond:hover {
+                background: rgba(102, 126, 234, 0.2) !important;
+                transform: translateY(-1px) !important;
+                box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2) !important;
+            }
+
+            .comment-item .btn::before {
+                content: '' !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: -100% !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent) !important;
+                transition: left 0.4s ease !important;
+            }
+
+            .comment-item .btn:hover::before {
+                left: 100% !important;
+            }
+
+            #commentsList {
+                margin-top: 24px !important;
+                animation: commentsListSlideIn 0.8s ease-out 0.8s both !important;
+            }
+
+            @keyframes commentsListSlideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            #commentsList:empty::after {
+                content: 'No comments yet. Be the first to comment! 💬' !important;
+                display: block !important;
+                text-align: center !important;
+                padding: 40px 20px !important;
+                color: #999 !important;
+                font-style: italic !important;
+                font-size: 16px !important;
+                background: rgba(255, 255, 255, 0.5) !important;
+                border-radius: 16px !important;
+                border: 2px dashed rgba(102, 126, 234, 0.2) !important;
+            }
+
+            @keyframes commentsSlideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .container {
+                padding: 60px 32px !important;
+                max-width: 1000px !important;
+            }
+
+            body::after {
+                content: '' !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                background-image: 
+                    radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 50% 50%, rgba(120, 219, 255, 0.05) 0%, transparent 50%) !important;
+                pointer-events: none !important;
+                z-index: -1 !important;
+                animation: backgroundFloat 20s ease-in-out infinite !important;
+            }
+
+            @keyframes backgroundFloat {
+                0%, 100% {
+                    transform: translateY(0) rotate(0deg);
+                }
+                50% {
+                    transform: translateY(-20px) rotate(1deg);
+                }
+            }
+
+            @media (max-width: 768px) {
+                .container h1 {
+                    font-size: 36px !important;
+                    margin-bottom: 40px !important;
+                }
+
+                .container_body h1,
+                .container_body p {
+                    padding: 20px 24px !important;
+                }
+
+                .container {
+                    padding: 40px 20px !important;
+                }
+
+                #comments {
+                    padding: 24px !important;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .container h1 {
+                    font-size: 28px !important;
+                }
+
+                .container_body h1,
+                .container_body p {
+                    padding: 16px 20px !important;
+                }
+
+                .container {
+                    padding: 20px 16px !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="container_header">
+                <div class="container_header_item">
+                    <a href="../index.html" class="card_link">Home</a>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <h1>Blog</h1>
+            <div class="container_body">
+                <p>In React, components are the building blocks of your
+                    application. They are responsible for rendering the UI and
+                    managing the state of your application. Components can be
+                    reused throughout your application, making it easier to
+                    maintain and update your code.</p>
+            </div>
+            <form id="commentForm">
+                <h2>Add comment</h2>
+                <label for="nameInput">Name</label>
+                <input type="text" id="nameInput" placeholder="Name" required>
+                <label for="commentInput">Comment</label>
+                <input type="text" id="commentInput" placeholder="Comment"
+                    required>
+                <button id="addCommentBtn" class="btn">Add comment</button>
+            </form>
+            <div id="commentsList"></div>
+        </div>
+        <script type="module" src="./index.js"></script>
+    </body>
+</html>
