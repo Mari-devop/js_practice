@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/common.css">
+        <title>Planner</title>
+    </head>
+    <style>
+    .planner_container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 30px;
+        width: 100%;
+    }
+
+    #planner_form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 30%;
+    }
+    
+    #planner_block {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 70%;
+    }
+
+    #planner_list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 70%;
+    }
+    
+    #planner_list h2 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    #planner_form input {
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    #planner_form select {
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    #planner_form label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    #planner_add_btn {
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+    #planner_add_btn:hover {
+        background-color: #3b82f6;
+        color: #fff;
+    }
+
+    #planner_add_btn:active {
+        background-color: #7090c0;
+        color: #fff;
+    }
+
+    #filter_status_label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    #filter_status {
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        padding: 10px;
+    }
+
+    #filter_status option {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .task-item {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .task-item p {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .task-item button {
+        width: 30%;
+        height: 40px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .task-item button:hover {
+        background-color: #3b82f6;
+        color: #fff;
+    }
+    
+    .task-item button:active {
+        background-color: #7090c0;
+        color: #fff;
+    }
+
+    .toolbar {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .toolbar p {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+    
+</style>
+    <body>
+        <header>
+            <div class="container_header">
+                <div class="container_header_item">
+                    <a href="../index.html" class="card_link">Home</a>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <h1>Planner</h1>
+            <div class="planner_container">
+                <form id="planner_form">
+                    <label for="planner_input">Task</label>
+                    <input type="text" id="planner_input" placeholder="Add Task"
+                        required />
+                    <button type="submit" id="planner_add_btn">Add Task</button>
+                </form>
+
+                <div id="planner_block">
+                    <div class="toolbar">
+                        <p>Task List</p>
+                        <select id="filter_status">
+                            <option value="all">All</option>
+                            <option value="done">Completed</option>
+                            <option value="active">Not Completed</option>
+                        </select>
+                    </div>
+                    <ul id="planner_list"></ul>
+                </div>
+
+            </div>
+        </div>
+        <script src="./index.js"></script>
+    </body>
+</html>
