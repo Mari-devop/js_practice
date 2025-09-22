@@ -15,25 +15,68 @@ function saveContacts() {
   localStorage.setItem(lOCAL_KEY, JSON.stringify(contacts));
 }
 
+function makeContactCard(c) {
+  const wrap = document.createElement('div');
+  wrap.className = 'contact-item';
+  wrap.dataset.id = c.id;
+
+  const pName = document.createElement('p');
+  const nameIcon = document.createElement('span');
+  nameIcon.textContent = '💁';
+  const nameText = document.createTextNode(c.name);
+  pName.appendChild(nameIcon);
+  pName.appendChild(nameText);
+
+  const pEmail = document.createElement('p');
+  const emailIcon = document.createElement('span');
+  emailIcon.textContent = '📧';
+  const emailText = document.createTextNode(c.email);
+  pEmail.appendChild(emailIcon);
+  pEmail.appendChild(emailText);
+
+  const pPhone = document.createElement('p');
+  const phoneIcon = document.createElement('span');
+  phoneIcon.textContent = '📞';
+  const phoneText = document.createTextNode(c.phone);
+  pPhone.appendChild(phoneIcon);
+  pPhone.appendChild(phoneText);
+
+  const btnDelete = document.createElement('button');
+  btnDelete.className = 'btn btn-delete';
+  btnDelete.type = 'button';
+  btnDelete.textContent = 'Delete';
+
+  const btnEdit = document.createElement('button');
+  btnEdit.className = 'btn btn-edit';
+  btnEdit.type = 'button';
+  btnEdit.textContent = 'Edit';
+
+  wrap.appendChild(pName);
+  wrap.appendChild(pEmail);
+  wrap.appendChild(pPhone);
+  wrap.appendChild(btnDelete);
+  wrap.appendChild(btnEdit);
+
+  return wrap;
+}
+
 function renderContacts(list = contacts) {
   if (!contactsList) return;
-  if(!list.length) {
-    contactsList.innerHTML = "No contacts found";
+
+  while (contactsList.firstChild) contactsList.removeChild(contactsList.firstChild);
+
+  if (!list.length) {
+    const empty = document.createElement('div');
+    empty.textContent = 'No contacts found';
+    contactsList.appendChild(empty);
     return;
   }
-  contactsList.innerHTML = list
-    .map(
-      (c) => `
-      <div class="contact-item" data-id="${c.id}">
-        <p><span>💁</span>${c.name}</p>
-        <p><span>📧</span>${c.email}</p>
-        <p><span>📞</span>${c.phone}</p>
-        <button class="btn btn-delete">Delete</button>
-        <button class="btn btn-edit">Edit</button>
-      </div>
-    `
-    )
-    .join("");
+
+  const frag = document.createDocumentFragment();
+  for (const c of list) {
+    frag.appendChild(makeContactCard(c));
+  }
+  contactsList.appendChild(frag);
 }
 
 document.addEventListener("DOMContentLoaded", () => renderContacts());
