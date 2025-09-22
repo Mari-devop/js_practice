@@ -6,7 +6,9 @@ const DEFAULT_PRIORITY = "medium";
 const PRIORITY_ORDER = { high: 0, medium: 1, low: 2 };
 
 class Task {
-  constructor(id, description, status, priority) {
+  constructor(id, description, status = DEFAULT_STATUS, priority = DEFAULT_PRIORITY) {
+    if (!STATUS.includes(status)) throw new Error(`Invalid status: ${status}`);
+    if (!PRIORITIES.includes(priority)) throw new Error(`Invalid priority: ${priority}`);
     this.id = id;
     this.description = description;
     this.status = status;
@@ -53,7 +55,7 @@ class TaskManager {
     const mul = dir === "desc" ? -1 : 1;
     this.tasks.sort(
       (a, b) =>
-        ((STATUS_ORDER[a.status] ?? 999) - (STATUS_ORDER[b.status] ?? 999)) *
+        ((PRIORITY_ORDER[a.priority] ?? 999) - (PRIORITY_ORDER[b.priority] ?? 999)) *
         mul
     );
     this.renderTasks();
