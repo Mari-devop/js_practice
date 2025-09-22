@@ -1,14 +1,14 @@
+function csvEscape(val) {
+  const s = String(val ?? '');
+  return /[",\n\r]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
 class Entry {
   constructor(amount, category, date, type) {
     this.amount = amount;
     this.category = category;
     this.date = date;
     this.type = type;
-  }
-
-  updateAmount(newAmount) {
-    this.amount = newAmount;
-    return this;
   }
 
   updateCategory(newCategory) {
@@ -22,8 +22,17 @@ class Entry {
         <p>${this.date}</p>
         <p>${this.type}</p>
         <p>${this.category}</p>
-        <p>${this.amount}</p>
+        <p>${this.amount.toFixed(2)}
       </div>`;
+  }
+
+  toCSVRow() {
+    return [
+      csvEscape(this.date),
+      csvEscape(this.type),
+      csvEscape(this.category),
+      csvEscape(this.amount.toFixed(2)),
+    ].join(',');
   }
 }
 
@@ -84,6 +93,29 @@ class BudgetCalculator {
       .map((entry) => entry.toHTML())
       .join("");
   }
+
+  toCSV() {
+    const header = ['date','type','category','amount'].join(',');
+    const rows = this.entries.map(e => e.toCSVRow());
+    return [header, ...rows].join('\r\n');
+  }
+
+  exportCSV(filename = `budget-entries-${new Date().toISOString().slice(0,10)}.csv`) {
+    if (!this.entries.length) {
+      alert('Нет записей для экспорта');
+      return;
+    }
+    const csv = this.toCSV();
+    const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' }); 
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
 }
 
 const budgetCalculator = new BudgetCalculator();
@@ -92,6 +124,10 @@ budgetCalculator.renderEntries();
 
 document.getElementById("addEntryBtn").addEventListener("click", () => {
   const amount = Number(document.getElementById("amount").value);
+  if (!amount || amount <= 0) {
+    alert("Please enter a valid amount");
+    return;
+  }
   const category = document.getElementById("category").value;
   const date = document.getElementById("date").value;
   const type = document.getElementById("type").value;
@@ -118,6 +154,7 @@ document
   .getElementById("getBalanceByCategoryBtn")
   .addEventListener("click", () => {
     const box = document.getElementById("balanceByCategoryList");
+    box.innerHTML = "";
     const totals = budgetCalculator.getTotalsByCategory();
     Object.entries(totals).forEach(([cat, sum]) => {
       const line = document.createElement("div");
@@ -147,3 +184,7 @@ document.getElementById("getBalanceByTypeBtn").addEventListener("click", () => {
     box.appendChild(line);
   });
 });
+
+document.getElementById("exportCsvBtn").addEventListener("click", () => {
+  budgetCalculator.exportCSV();
+})
