@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/common.css">
+        <title>Contacts</title>
+    </head>
+    <style>
+        .column_container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .right_column {
+            flex: 1;
+            max-width: 60%;
+            flex-direction: column;
+            gap: 0px;
+        }
+
+        #contactForm {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 32px;
+            box-sizing: border-box;
+            width: 35%;
+            min-width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.1),
+                0 8px 16px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #contactForm::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
+        }
+
+        #contactForm h2 {
+            margin: 0 0 20px 0;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        #contactForm input {
+            height: 48px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            padding: 0 16px;
+            font-size: 15px;
+            color: #333;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        #contactForm input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        #contactForm input::placeholder {
+            color: #999;
+            font-weight: 400;
+        }
+
+        #contactForm label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        #addContactBtn {
+            height: 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            border: none;
+            padding: 0 24px;
+            width: 100%;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            color: #fff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        #addContactBtn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        #addContactBtn:hover::before {
+            left: 100%;
+        }
+
+        #addContactBtn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        #addContactBtn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .input-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            margin-right: 0;
+            margin-left: auto;
+        }
+
+        #searchInput {
+            flex: 1;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 16px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            padding: 0 16px;
+            font-size: 15px;
+            color: #333;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-1px);
+        }
+
+        #searchBtn {
+            height: 48px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            border: none;
+            padding: 0 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            color: #fff;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            min-width: 100px;
+        }
+
+        #searchBtn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        #searchBtn:hover::before {
+            left: 100%;
+        }
+
+        #searchBtn:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .right_column h2 {
+            margin: 0 0 24px 0;
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #contactsList {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 20px;
+            border: none;
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: contactSlideIn 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .contact-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .contact-item:hover::before {
+            left: 100%;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 
+                0 8px 20px rgba(102, 126, 234, 0.1),
+                0 4px 12px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .contact-item:nth-child(1) { animation-delay: 0.1s; }
+        .contact-item:nth-child(2) { animation-delay: 0.15s; }
+        .contact-item:nth-child(3) { animation-delay: 0.2s; }
+        .contact-item:nth-child(4) { animation-delay: 0.25s; }
+        .contact-item:nth-child(5) { animation-delay: 0.3s; }
+        .contact-item:nth-child(6) { animation-delay: 0.35s; }
+        .contact-item:nth-child(7) { animation-delay: 0.4s; }
+        .contact-item:nth-child(8) { animation-delay: 0.45s; }
+        .contact-item:nth-child(9) { animation-delay: 0.5s; }
+        .contact-item:nth-child(10) { animation-delay: 0.55s; }
+
+        @keyframes contactSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .contact-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .contact-detail {
+            font-size: 14px;
+            color: #666;
+            margin: 0;
+        }
+
+        .contact-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .contact-btn {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+
+        .edit-btn:hover {
+            background: rgba(102, 126, 234, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .delete-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .delete-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-style: italic;
+        }
+
+        .contact-item span {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .column_container {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            #contactForm {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .right_column {
+                max-width: 100%;
+            }
+
+            .input-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <body>
+        <header>
+            <div class="container_header">
+                <div class="container_header_item">
+                    <a href="../index.html" class="card_link">Home</a>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <h1>Contacts</h1>
+            <div class="column_container">
+                <form id="contactForm">
+                    <h2>Add New Contact</h2>
+                    <label for="name">Name</label>
+                    <input type="text" placeholder="Enter full name" id="name"
+                        required>
+
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="Enter email address"
+                        id="email" required>
+
+                    <label for="phone">Phone</label>
+                    <input type="tel" placeholder="Enter phone number"
+                        id="phone" required>
+
+                    <button type="submit" id="addContactBtn" class="btn"
+                        aria-label="Add contact">Add Contact</button>
+                </form>
+                <div class="column_container right_column">
+                    <div class="input-container">
+                        <input type="text" placeholder="Search contacts..."
+                            id="searchInput"
+                            aria-label="Search contact">
+                    </div>
+                    <h2>Contacts List</h2>
+                    <div id="contactsList"></div>
+                </div>
+            </div>
+        </div>
+        <script type="module" src="./index.js"></script>
+    </body>
+</html>
