@@ -82,25 +82,41 @@ let eventsByDate = JSON.parse(localStorage.getItem("eventsByDate") || "{}");
 
 function renderEvents(dateKey) {
   events.innerHTML = "";
+
   const list = eventsByDate[dateKey] || [];
 
+  const title = document.createElement("p");
+  title.className = "events_title";
+  title.textContent = `Event List for ${dateKey}`;
+  events.appendChild(title);
+
   if (list.length === 0) {
-    events.innerHTML = `<p id="eventsTitle">Event List for ${dateKey}</p><p class="events_empty">No events</p>`;
+    const empty = document.createElement("p");
+    empty.className = "events_empty";
+    empty.textContent = "No events";
+    events.appendChild(empty);
     return;
   }
-
-  events.insertAdjacentHTML("beforeend", `<p id="eventsTitle">Event List for ${dateKey}</p>`);
 
   list.forEach((text, idx) => {
     const item = document.createElement("div");
     item.className = "event_item";
+
     item.innerHTML = `
-      <p>${text}</p>
-      <p>${dateKey}</p>
+      <p class="event_text">${text}</p>
+      <p class="event_date">${dateKey}</p>
+      <button class="event_delete" data-index="${idx}">Delete</button>
     `;
+
     events.appendChild(item);
   });
+
+  const delAll = document.createElement("button");
+  delAll.className = "event_delete_all";
+  delAll.textContent = "Delete all for this date";
+  events.appendChild(delAll);
 }
+
 
 previousMonthBtn.addEventListener("click", () => {
   currentMonth--;
@@ -137,10 +153,27 @@ calenderBody.addEventListener("click", (e) => {
   modal.showModal();
 });
 
+modalForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  
+  const text = eventInput.value.trim();
+  const dateValue = dateInput.value;
+  
+  if (!text) {
+    alert("Please enter event text");
+    return;
+  }
+  
+  const eventDate = new Date(dateValue);
+  if (isNaN(eventDate.getTime())) {
+    alert("Invalid date");
+    return;
+  }
+});
+
 closeBtn.addEventListener("click", () => {
   modal.close();
 });
-
 
 addEventBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -156,4 +189,36 @@ addEventBtn.addEventListener("click", (e) => {
 
   eventInput.value = "";
   renderEvents(dateValue);
+});
+
+events.addEventListener("click", (e) => {
+  const btnOne = e.target.closest(".event_delete");
+  if (btnOne) {
+    const idx = Number(btnOne.dataset.index);
+    if (!Number.isInteger(idx)) return;
+
+    const dateKey = selectedDate || dateInput.value;
+    if (!dateKey) return;
+
+    const list = eventsByDate[dateKey] || [];
+    list.splice(idx, 1); 
+    if (list.length === 0) {
+      delete eventsByDate[dateKey]; 
+    } else {
+      eventsByDate[dateKey] = list;
+    }
+    localStorage.setItem("eventsByDate", JSON.stringify(eventsByDate));
+    renderEvents(dateKey);
+    return;
+  }
+
+  const btnAll = e.target.closest(".event_delete_all");
+  if (btnAll) {
+    const dateKey = selectedDate || dateInput.value;
+    if (!dateKey) return;
+
+    delete eventsByDate[dateKey]; 
+    localStorage.setItem("eventsByDate", JSON.stringify(eventsByDate));
+    renderEvents(dateKey);
+  }
 });
