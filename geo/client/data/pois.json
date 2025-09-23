@@ -1,0 +1,10 @@
+[
+    {
+      "id": "poi_1",
+      "title": "Old Town Gate",
+      "coords": { "lat": 51.5079, "lng": -0.0877 },
+      "radius": 70,
+      "audio": "./audio/gate.mp3",
+      "priority": 1
+    }
+  ]
