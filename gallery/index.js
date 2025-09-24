@@ -16,46 +16,18 @@ let images = [];
 let currentIndex = 0;
 
 function renderGallery() {
-  while (gallery.firstChild) gallery.removeChild(gallery.firstChild);
-
-  if (!images.length) {
-    const empty = document.createElement('div');
-    empty.className = 'empty-state';
-    empty.textContent = 'No images';
-    gallery.appendChild(empty);
-    return;
-  }
-
-  const frag = document.createDocumentFragment();
-
-  for (const { url, description, id } of images) {
-    const fig = document.createElement('figure');
-    fig.className = 'item';
-    fig.dataset.id = id;
-
-    const img = document.createElement('img');
-    img.src = url;
-    img.alt = description || '';
-
-    const cap = document.createElement('figcaption');
-    cap.textContent = description || '';
-
-    const del = document.createElement('button');
-    del.className = 'delete-btn';
-    del.type = 'button';
-    del.setAttribute('aria-label', 'Delete image');
-    del.textContent = 'Delete';
-
-    fig.appendChild(img);
-    fig.appendChild(cap);
-    fig.appendChild(del);
-
-    frag.appendChild(fig);
-  }
-
-  gallery.appendChild(frag);
+  gallery.innerHTML = images
+    .map(
+      ({ url, description, id }) => `
+      <figure class="item" data-id="${id}">
+        <img src="${url}" alt="${description}" loading="lazy">
+        <figcaption>${description}</figcaption>
+        <button class="delete-btn" aria-label="Delete image">Delete</button>
+      </figure>
+    `
+    )
+    .join("");
 }
-
 
 function loadImages() {
   const raw = JSON.parse(localStorage.getItem("images")) || [];
@@ -72,7 +44,7 @@ function probeImage(url) {
     const img = new Image();
     img.onload = () => resolve(true);
     img.onerror = () => reject(new Error("Image failed to load"));
-    img.referrerPolicy = "no-referrer"; 
+    img.referrerPolicy = "no-referrer"; // иногда помогает при хотлинке
     img.src = url;
   });
 }
@@ -120,27 +92,18 @@ gallery.addEventListener("click", (e) => {
   }
 });
 
-function updateModal() {
-  if (!images.length) return;
-  currentIndex =
-    ((currentIndex % images.length) + images.length) % images.length;
-  const item = images[currentIndex];
-  if (!item) return;
-  image.src = item.url;
-  image.alt = item.description || "";
-  modalDescEl.textContent = item.description || "";
-}
-
 prevBtn.addEventListener("click", () => {
-  if (!images.length) return;
-  currentIndex = (currentIndex - 1 + images.length) % images.length;
-  updateModal();
+  currentIndex--;
+  image.src = images[currentIndex].url;
+  image.alt = images[currentIndex].description;
+  modalDescEl.textContent = images[currentIndex].description;
 });
 
 nextBtn.addEventListener("click", () => {
-  if (!images.length) return;
-  currentIndex = (currentIndex + 1) % images.length;
-  updateModal();
+  currentIndex++;
+  image.src = images[currentIndex].url;
+  image.alt = images[currentIndex].description;
+  modalDescEl.textContent = images[currentIndex].description;
 });
 
 saveBtn.addEventListener("click", () => {
