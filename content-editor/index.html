@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="../styles/common.css">
+        <link rel="stylesheet" href="./styles.css">
+        <title>Content Editor</title>
+    </head>
+    <body>
+        <header>
+            <div class="container_header">
+                <div class="container_header_item">
+                    <a href="../index.html" class="card_link">Home</a>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <h1>Content Editor</h1>
+            <div class="btn-control-container" id="btn-control-container">
+                <button id="save-btn" class="btn"
+                    aria-label="Save Document">Save Document</button>
+                <button id="remove-btn" class="btn"
+                    aria-label="Remove">Remove</button>
+            </div>
+            <h2>Choose element</h2>
+            <div id="selector-container">
+                <button id="header-btn-1" class="btn" aria-label="Header">Header
+                    H1</button>
+                <button id="header-btn-2" class="btn" aria-label="Header">Header
+                    H2</button>
+                <button id="header-btn-3" class="btn" aria-label="Header">Header
+                    H3</button>
+                <button id="paragraph-btn" class="btn"
+                    aria-label="Paragraph">Paragraph</button>
+            </div>
+            <h2>Format element</h2>
+            <div id="format-container">
+                <button id="bold-btn" class="btn"
+                    aria-label="Bold">Bold</button>
+                <button id="italic-btn" class="btn"
+                    aria-label="Italic">Italic</button>
+                <button id="underline-btn" class="btn"
+                    aria-label="Underline">Underline</button>
+            </div>
+            <div class="content-container" id="content-container"></div>
+            <div id="undo-redo-container">
+                <button id="undo-btn" class="btn"
+                    aria-label="Undo">Undo</button>
+                <button id="redo-btn" class="btn"
+                    aria-label="Redo">Redo</button>
+                <button id="export-btn" class="btn"
+                    aria-label="Export">Export</button>
+            </div>
+        </div>
+        <script src="./index.js"></script>
+    </body>
+</html>
