@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Chatik</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+            rel="stylesheet">
+        <link rel="stylesheet" href="../styles/common.css">
+        <link rel="stylesheet" href="./styles.css">
+    </head>
+    <body>
+        <header>
+            <div class="container_header">
+                <div class="container_header_item">
+                    <a href="../index.html" class="card_link">Home</a>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <h1>Chating</h1>
+
+            <div class="status">
+                <p>Status: <span data-role="conn-status"></span></p>
+                <p>Users: <span data-role="users-count"></span></p>
+            </div>
+
+            <main class="chat">
+                <ul class="messages" data-role="messages" role="log"
+                    aria-live="polite"></ul>
+            </main>
+            <form class="send-message" data-role="send-message">
+                <input class="name" data-role="name"
+                    placeholder="Ваше ім'я (optional)" />
+                <textarea class="input" data-role="input"
+                    placeholder="Напишіть повідомлення…"
+                    maxlength="1000"></textarea>
+                <button class="send" data-role="send" disabled>Send</button>
+            </form>
+        </div>
+        <script src="./index.js"></script>
+    </body>
+</html>
